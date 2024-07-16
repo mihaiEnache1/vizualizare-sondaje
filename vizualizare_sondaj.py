@@ -73,27 +73,27 @@ def calculate_and_plot_image_selections(survey_responses, survey_name):
 
     # Pregătim datele pentru plotly
     data = {
-        'Image Types': ['Existing Dataset', 'Newly Generated', 'All', 'None'],
-        'Selections counter': [total_existent, total_generated, count_all_selected, count_none_selected]
+        'Tip Imagine': ['Set de Date Existent', 'Metodă Propusă', 'Toate', 'Niciuna'],
+        'Număr Selecții': [total_existent, total_generated, count_all_selected, count_none_selected]
     }
 
     # Creăm un dataframe cu pandas pentru plotly
     df = pd.DataFrame(data)
 
     # Generăm graficul cu plotly
-    fig = px.bar(df, x='Image Types', y='Selections counter', color='Image Types',
-                 title=f'Comparison in image selections for {survey_name}',
+    fig = px.bar(df, x='Tip Imagine', y='Număr Selecții', color='Tip Imagine',
+                 title=f'Evaluare selecții pentru {survey_name}',
                  color_discrete_map={
-                     'Existing Dataset': 'blue',
-                     'Newly Generated': 'green',
-                     'All': 'orange',
-                     'None': 'red'
+                     'Set de Date Existent': 'blue',
+                     'Metodă Propusă': 'green',
+                     'Toate': 'orange',
+                     'Niciuna': 'red'
                  })
 
     return fig
 
 # Afișăm graficele pentru fiecare sondaj
-st.title("User study results")
+st.title("Rezultate Sondaj")
 
 for survey_name, survey_responses in responses_by_survey.items():
     fig = calculate_and_plot_image_selections(survey_responses, survey_name)
@@ -101,5 +101,5 @@ for survey_name, survey_responses in responses_by_survey.items():
 
 # Afișăm graficul cumulativ pentru toate sondajele
 all_responses_combined = [responses for survey_responses in responses_by_survey.values() for responses in survey_responses]
-fig_cumulative = calculate_and_plot_image_selections(all_responses_combined, "all surveys combined")
+fig_cumulative = calculate_and_plot_image_selections(all_responses_combined, "Toate Sondajele")
 st.plotly_chart(fig_cumulative)
